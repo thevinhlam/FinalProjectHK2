@@ -11,7 +11,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private FirstpersonShooterController FPSController;
     [SerializeField] private Recoil recoil;
     [SerializeField] private Transform gunTransform;
-    [SerializeField] private TextMeshProUGUI ammoText;
+    //[SerializeField] private TextMeshProUGUI ammoText;
     bool weaponTakenOut = false;
     public Animator Anim;
     
@@ -138,7 +138,7 @@ public class Gun : MonoBehaviour
     {
         Anim.SetBool("ShootReady", ReadyToShoot);
         timeBtwBullets += Time.deltaTime;
-        ammoText.text = gunData.currentAmmo.ToString();
+        //ammoText.text = gunData.currentAmmo.ToString();
     }
 
     public void SetWeaponTakenOutToTrue()

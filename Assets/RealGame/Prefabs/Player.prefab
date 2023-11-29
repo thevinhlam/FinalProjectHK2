@@ -2778,7 +2778,7 @@ GameObject:
   - component: {fileID: 7159661214965093472}
   m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2821,7 +2821,7 @@ MonoBehaviour:
   groundDrag: 4
   speedMultiplier: 0
   readyToJump: 1
-  grounded: 0
+  grounded: 1
   jumpKey: 32
   sprintKey: 304
   maxSlopeAngle: 0
@@ -2829,7 +2829,7 @@ MonoBehaviour:
   angleCheck: 0
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
 --- !u!114 &3319970356486661548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2843,7 +2843,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camera: {fileID: 7375617408722115518}
-  mouseSensitivity: 60
+  mouseSensitivity: 5
 --- !u!114 &1882618014187303334
 MonoBehaviour:
   m_ObjectHideFlags: 0
