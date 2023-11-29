@@ -114,8 +114,10 @@ public class PlayerController : MonoBehaviour
             Debug.DrawRay(transform.position,Vector3.down * 1.5f,Color.red);
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             angleCheck = angle;
+            
             return angle < maxSlopeAngle && angle != 0;            
-        }       
+        }
+        
         return false;
     }
 
