@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Gun : MonoBehaviour
+public abstract class Gun : MonoBehaviour
 {
     [SerializeField] public GunData gunData;
     [SerializeField] public Camera cam;
-    [SerializeField] public Animator gunAnimator;
     [SerializeField] private FirstpersonShooterController FPSController;
     [SerializeField] private Recoil recoil;
     [SerializeField] private Transform gunTransform;
@@ -30,39 +29,58 @@ public class Gun : MonoBehaviour
     }
     private void Awake()
     {
-        gunData.currentAmmo = 30;
+        gunData.currentAmmo = gunData.magSize;
     }
     private void Start()
     {
-        FirstpersonShooterController.shootInput += Shoot;
+        FirstpersonShooterController.shootInput += Fire;
         FirstpersonShooterController.reloadInput += StartReloading;
         FirstpersonShooterController.ADSInput += AimDownSightFOV;
     }
     public void StartReloading()
     {
-        if (!gunData.Reloading && gunData.currentAmmo < gunData.magSize)
+        if (!gunData.Reloading && gunData.currentAmmo < gunData.magSize && weaponTakenOut)
         {
             //Reload
-            StartCoroutine(Reload());
+            //StartCoroutine(Reload());
+            Reloading();
         }
     }
-    private IEnumerator Reload()
+    public void Reloading()
     {
         ReturnFOV();
+        weaponTakenOut = false;
         gunData.Reloading = true;
-        //yield return new WaitForEndOfFrame();
         Anim.SetBool("Reload", true);
-        Anim.SetBool("Shooting", false);
-        yield return new WaitForSeconds(gunData.reloadTime);
-        gunData.currentAmmo = gunData.magSize;
-        gunData.Reloading = false;
+        Invoke("Reloaded", gunData.reloadTime);
     }
+
+    
+    public void Reloaded()
+    {
+        gunData.currentAmmo = gunData.magSize;
+    }
+    //private IEnumerator Reload()
+    //{
+    //    ReturnFOV();
+    //    weaponTakenOut = false;
+    //    gunData.Reloading = true;
+    //    //yield return new WaitForEndOfFrame();
+    //    Anim.SetBool("Reload", true);
+    //    Anim.SetBool("Shooting", false);
+    //    yield return new WaitForSeconds(gunData.reloadTime);
+    //    gunData.currentAmmo = gunData.magSize;
+    //    //gunData.Reloading = false;
+    //}
     public void EndReload()
     {
         Anim.SetBool("Reload", false);
-        
+        gunData.Reloading = false;
+        weaponTakenOut = true;
     }
     private bool ReadyToShoot => !gunData.Reloading && timeBtwBullets > 1f / (gunData.fireRate / 60) && weaponTakenOut;
+
+    public abstract void Fire();
     
     public void Shoot()
     {
@@ -74,9 +92,6 @@ public class Gun : MonoBehaviour
                 {
                     //Anim.SetBool("Shooting", true);
                     Anim.SetTrigger("Shoot");
-                    var animationClip = Anim.GetCurrentAnimatorClipInfo(0);
-                    var animTime = animationClip[0].clip.length;
-                    Debug.Log("ANiamtion name" + animationClip[0].clip.name  +"Animation time "+animTime );
                 }
                 //recoil.RecoilFire();
 
@@ -113,9 +128,11 @@ public class Gun : MonoBehaviour
         recoil.RecoilFire();
     }
 
+    private bool ReadyToADS => !gunData.Reloading && weaponTakenOut;
+
     public void AimDownSightFOV()
     {
-        if (Input.GetMouseButton(1) && !gunData.Reloading)
+        if (Input.GetMouseButton(1) && ReadyToADS)
         {
             cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, FPSController.defaultFOV * 0.75f, Time.deltaTime * 13f);
             gunTransform.localPosition = Vector3.Lerp(gunTransform.localPosition, gunData.adsPos, Time.deltaTime * 20f);
@@ -134,15 +151,18 @@ public class Gun : MonoBehaviour
         gunTransform.localPosition = gunData.initialPos;
     }
 
+    public void SetWeaponTakenOutToTrue()
+    {
+        weaponTakenOut = true;
+    }
+
     private void Update()
     {
         Anim.SetBool("ShootReady", ReadyToShoot);
         timeBtwBullets += Time.deltaTime;
         ammoText.text = gunData.currentAmmo.ToString();
+        Debug.Log(gunData.name +" " + gunData.Reloading);
     }
 
-    public void SetWeaponTakenOutToTrue()
-    {
-        weaponTakenOut = true;
-    }
+   
 }

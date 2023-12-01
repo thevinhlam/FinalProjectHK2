@@ -26,14 +26,13 @@ public class FirstpersonShooterController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(0))
-        {
-            shootInput?.Invoke();
-        }
+        shootInput?.Invoke();
+
         if (Input.GetKeyDown(reloadKey))
         {
             reloadInput?.Invoke();
         }
+
         ADSInput?.Invoke();
     }
 
