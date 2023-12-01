@@ -53,6 +53,7 @@ public abstract class Gun : MonoBehaviour
         gunData.Reloading = true;
         Anim.SetBool("Reload", true);
         Invoke("Reloaded", gunData.reloadTime);
+        
     }
 
     
@@ -77,6 +78,7 @@ public abstract class Gun : MonoBehaviour
         Anim.SetBool("Reload", false);
         gunData.Reloading = false;
         weaponTakenOut = true;
+        
     }
     private bool ReadyToShoot => !gunData.Reloading && timeBtwBullets > 1f / (gunData.fireRate / 60) && weaponTakenOut;
 
@@ -132,11 +134,12 @@ public abstract class Gun : MonoBehaviour
 
     public void AimDownSightFOV()
     {
-        if (Input.GetMouseButton(1) && ReadyToADS)
+        if (Input.GetMouseButton(1) && ReadyToADS )
         {
             cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, FPSController.defaultFOV * 0.75f, Time.deltaTime * 13f);
             gunTransform.localPosition = Vector3.Lerp(gunTransform.localPosition, gunData.adsPos, Time.deltaTime * 20f);
             gunData.Aiming = true;
+
         }
         if (Input.GetMouseButtonUp(1))
         {
