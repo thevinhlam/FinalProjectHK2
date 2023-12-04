@@ -11,7 +11,7 @@ public abstract class Gun : MonoBehaviour
     [SerializeField] private Recoil recoil;
     [SerializeField] private Transform gunTransform;
     [SerializeField] private TextMeshProUGUI ammoText;
-    bool weaponTakenOut = false;
+    protected bool weaponTakenOut = false;
     public Animator Anim;
     
     protected float timeBtwBullets;
@@ -35,7 +35,7 @@ public abstract class Gun : MonoBehaviour
     {
         FirstpersonShooterController.shootInput += Fire;
         FirstpersonShooterController.reloadInput += StartReloading;
-        FirstpersonShooterController.ADSInput += AimDownSightFOV;
+        FirstpersonShooterController.ADSInput += ADSFOV;
     }
     public void StartReloading()
     {
@@ -55,7 +55,6 @@ public abstract class Gun : MonoBehaviour
         Invoke("Reloaded", gunData.reloadTime);
         
     }
-
     
     public void Reloaded()
     {
@@ -130,16 +129,17 @@ public abstract class Gun : MonoBehaviour
         recoil.RecoilFire();
     }
 
-    private bool ReadyToADS => !gunData.Reloading && weaponTakenOut;
+    //private bool ReadyToADS => !gunData.Reloading && weaponTakenOut;
+
+    public abstract void ADSFOV();
 
     public void AimDownSightFOV()
     {
-        if (Input.GetMouseButton(1) && ReadyToADS )
+        if (Input.GetMouseButton(1))
         {
             cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, FPSController.defaultFOV * 0.75f, Time.deltaTime * 13f);
             gunTransform.localPosition = Vector3.Lerp(gunTransform.localPosition, gunData.adsPos, Time.deltaTime * 20f);
             gunData.Aiming = true;
-
         }
         if (Input.GetMouseButtonUp(1))
         {

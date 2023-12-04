@@ -2963,8 +2963,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9db1a8d9fae2c684d820c6ba1380ceba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recoilX: -2
-  recoilY: 2
+  recoilX: -5
+  recoilY: 5
   recoilZ: 0.2
   snappiness: 5
   returnSpeed: 2
