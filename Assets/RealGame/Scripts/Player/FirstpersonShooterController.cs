@@ -14,13 +14,17 @@ public class FirstpersonShooterController : MonoBehaviour
     [SerializeField] private GameObject gun;
 
     [SerializeField] private KeyCode reloadKey;
-    
+
+    private float maxHp = 100;
+    private float currentHp;
+
     public static Action shootInput;
     public static Action reloadInput;
     public static Action ADSInput;
     
     void Start()
     {
+        currentHp = maxHp;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
