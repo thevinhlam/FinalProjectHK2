@@ -9,17 +9,13 @@ public class Recoil : MonoBehaviour
     private Vector3 currentRotation;
 
     //Hipfire Recoil
-    [SerializeField] private float recoilX;
-    [SerializeField] private float recoilY;
-    [SerializeField] private float recoilZ;
+    public float recoilX;
+    public float recoilY;
+    public float recoilZ;
 
     //Settings
-    [SerializeField] private float snappiness;
-    [SerializeField] private float returnSpeed;
-    void Start()
-    {
-        
-    }
+    public float snappiness;
+    public float returnSpeed;
 
     void Update()
     {

@@ -18,6 +18,14 @@ public class GunData : ScriptableObject
     public int magSize;
     public float fireRate;
     public float reloadTime;
+
+    [Header("Recoil")]
+    public float recoilX;
+    public float recoilY;
+    public float recoilZ;
+    public float returnSpeed;
+    public float snappiness;
+
     [HideInInspector]
     public bool Reloading;
     public bool Aiming;

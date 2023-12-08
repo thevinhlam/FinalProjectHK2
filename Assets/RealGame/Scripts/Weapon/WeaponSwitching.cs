@@ -11,14 +11,22 @@ public class WeaponSwitching : MonoBehaviour
     [SerializeField] KeyCode HeavyWeapon;
 
     private float weaponSwitchCoolDown = 0.75f;
-    bool readyToSwitch => weaponSwitchCoolDown < 0;
+    bool readyToSwitch => weaponSwitchCoolDown <= 0;
     private void Awake()
     {
         selectedWeapon = 1;
     }
+    private void Start()
+    {
+        ActiveWeapon();
+    }
     void Update()
     {
-        weaponSwitchCoolDown -= Time.deltaTime;
+        if(weaponSwitchCoolDown > 0)
+        {
+            weaponSwitchCoolDown -= Time.deltaTime;
+        }
+        Debug.Log(weaponSwitchCoolDown);
         if (Input.GetKeyDown(PrimaryWeapon) && readyToSwitch && selectedWeapon != 1)
         {
             weaponSwitchCoolDown = 0.75f;

@@ -13,12 +13,17 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   name: Pistol
-  adsPos: {x: 0.1834, y: -0.187, z: 0.1}
+  adsPos: {x: 0.1834, y: -0.15, z: 0.1}
   initialPos: {x: 0.35, y: -0.25, z: 0.4}
   damage: 2
-  currentAmmo: 10
+  currentAmmo: 9
   magSize: 10
   fireRate: 120
   reloadTime: 1.7
+  recoilX: -10
+  recoilY: 5
+  recoilZ: 0.2
+  returnSpeed: 5
+  snappiness: 5
   Reloading: 0
   Aiming: 0
